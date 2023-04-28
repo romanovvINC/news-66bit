@@ -1,0 +1,26 @@
+.footer {
+  bottom: 0;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  position: fixed;
+  height: 70px;
+}
+
+.buttonContainer {
+  height: 100%;
+  display: flex;
+  justify-content: space-around;
+  margin: 0 auto;
+  width: 500px;
+}
+
+.footerButton {
+  font-weight: bold;
+  margin-top: 15px;
+  height: 100%;
+  align-items: center;
+  font-size: 30px;
+  vertical-align: middle;
+  text-decoration: none;
+}

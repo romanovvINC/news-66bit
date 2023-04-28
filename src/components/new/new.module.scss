@@ -1,0 +1,19 @@
+.newComponent {
+  border-radius: 10px;
+  > h1 {
+    padding: 0;
+    margin: 0;
+    line-height: 1.5;
+    vertical-align: middle;
+  }
+
+  > p {
+    padding: 0 0 10px 0;
+    margin: 0;
+    font-size: 20px;
+  }
+  > h1, > p {
+    padding-left: 10px;
+  }
+  margin-bottom: 20px;
+}
