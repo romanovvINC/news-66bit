@@ -20,7 +20,6 @@ export const getThemes = createAsyncThunk<ISiteTheme[]>(
   async (_, thunkApi) => {
     try {
       const responses = await Promise.all(themes.map(theme => axiosPublic.get<ISiteTheme>(`theme/get?name=${theme}`)));
-      console.log(responses);
       const res: ISiteTheme[] = responses.map(response => response.data);
       return res;
     } catch (error) {

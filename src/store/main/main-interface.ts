@@ -6,8 +6,7 @@ export interface IMainStore {
   theme: ISiteTheme,
   themes: ISiteTheme[],
   news: INew[],
-  newsCount: number,
-  isRefreshing: boolean
+  fetchPage: number
 }
 
 export interface ISiteTheme {

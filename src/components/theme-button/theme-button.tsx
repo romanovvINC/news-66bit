@@ -17,9 +17,9 @@ const ThemeButton = (props: IThemeButton) => {
   }
 
   return (
-    <button onClick={changeThemeHandler}className={styles.themeButton} style={{
+    <button onClick={changeThemeHandler} className={styles.themeButton} style={{
       color: theme.textColor,
-      backgroundColor: theme.mainColor,
+      backgroundColor: theme.mainColor  ,
       border: `6px solid ${theme.textColor}`
     }}>{theme.title}</button>
   );

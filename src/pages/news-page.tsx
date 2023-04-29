@@ -1,69 +1,57 @@
 import React, {useEffect, useState} from 'react';
-import {getNews, getTheme} from "../store/main/main-actions";
-import {themesNames} from "../constants/server-const";
-import reducer, {clearNews, refreshNews} from '../store/main/main-slice';
+import {getNews} from "../store/main/main-actions";
+import {clearFetchPage, clearNews, increaseFetchPage} from '../store/main/main-slice';
 import {store} from "../index";
 import {useTypedSelector} from "../store/store";
 import NewComponent from "../components/new/new";
 import LoaderModal from "../components/loader-modal/loader-modal";
+import {newsCount} from "../constants/server-const";
+import RefreshButton from "../components/refresh-button/refresh-button";
+const PullToRefresh = require('pulltorefreshjs');
 
 const NewsPage = () => {
   const theme = useTypedSelector((state) => state.mainSlice.theme);
   const news = useTypedSelector((state) => state.mainSlice.news);
-  const newsCount = useTypedSelector((state) => state.mainSlice.newsCount);
   const isLoading = useTypedSelector((state) => state.mainSlice.isNewsLoading);
-  const isRefreshing = useTypedSelector((state) => state.mainSlice.isRefreshing);
-
-  const [currentPage, setCurrentPage] = useState<number>(1);
-
-  const [isFetching, setIsFetching] = useState(true);
+  const page = useTypedSelector((state) => state.mainSlice.fetchPage);
 
   document.body.style.backgroundColor = theme.mainColor;
 
   useEffect(() => {
-    console.log(newsCount < 20 && isFetching);
-    if (isFetching && newsCount < 20) {
-      setCurrentPage(currentPage + 1);
-      store.dispatch(getNews({count: 10, page: currentPage}));
-      setIsFetching(false);
-    }
-  }, [isFetching]);
-
-  useEffect(() => {
-    if (isRefreshing) {
-      store.dispatch(clearNews());
-      store.dispatch(getNews({count: 10, page: 1}));
-      setCurrentPage(1);
-      setIsFetching(false);
-      store.dispatch(refreshNews(false));
-    }
-  }, [isRefreshing])
-
-  useEffect(() => {
+    PullToRefresh.init({
+      mainElement: 'main',
+      onRefresh() {
+        refreshHandler();
+      },
+    });
     document.addEventListener('scroll', scrollHandler);
     return function() {
+      PullToRefresh.destroyAll();
       document.removeEventListener('scroll', scrollHandler);
     }
-  }, [])
+  }, []);
 
+  const refreshHandler = () => {
+    store.dispatch(clearNews());
+    store.dispatch(clearFetchPage());
+    store.dispatch(getNews({count: newsCount, page: 1}));
+  }
 
   const scrollHandler = ():void => {
     if (document.documentElement.scrollHeight - (document.documentElement.scrollTop + window.innerHeight) < 10) {
-      console.log("scroll");
-      setIsFetching(true);
-    }
-
-    if (document.documentElement.scrollTop === 0) {
-      store.dispatch(refreshNews(true));
+      store.dispatch(increaseFetchPage());
+      store.dispatch(getNews({count: newsCount, page: page + 1}));
     }
   }
-
   return (
     <main className="mainContainer">
+      <div className='refreshButtonContainer'>
+        <RefreshButton onClick={refreshHandler} />
+      </div>
       {isLoading && <LoaderModal />}
-      {news.map(newInArr => <NewComponent singleNew={newInArr} theme={theme}/>)}
+      {news.map((newInArr, key) => <NewComponent singleNew={newInArr} theme={theme}/>)}
     </main>
   );
-}
+};
 
 export default NewsPage;

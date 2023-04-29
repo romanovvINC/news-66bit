@@ -15,10 +15,8 @@ const ThemesPage = () => {
   document.body.style.backgroundColor = theme.mainColor;
 
   useEffect(() => {
-    store.dispatch(clearNews());
     store.dispatch(getThemes());
   }, []);
-  console.log(themes);
 
   return (
     <main className="mainContainer">

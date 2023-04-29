@@ -9,11 +9,9 @@ import {store} from "./index";
 import {getTheme} from "./store/main/main-actions";
 import {themesNames} from "./constants/server-const";
 import {storage} from "./model/storage";
-import LoaderModal from "./components/loader-modal/loader-modal";
 
 function App() {
   useEffect(() => {
-    console.log(storage.getItem('theme'));
     if (!storage.getItem('theme')) {
       store.dispatch(getTheme(themesNames.lightTheme));
     }

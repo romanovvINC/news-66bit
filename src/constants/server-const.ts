@@ -12,3 +12,5 @@ export const themes = [
   'light',
   'blue'
 ]
+
+export const newsCount = 7;

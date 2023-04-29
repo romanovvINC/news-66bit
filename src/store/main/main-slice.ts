@@ -20,8 +20,7 @@ const initialState: IMainStore = {
   theme: storage.getItem('theme') || initialTheme,
   themes: [],
   news: storage.getItem('news') || [],
-  newsCount: 0,
-  isRefreshing: false
+  fetchPage: 1
 }
 
 const mainSlice = createSlice({
@@ -29,11 +28,14 @@ const mainSlice = createSlice({
   initialState,
   reducers: {
     clearNews: (state) => {
-      state.news = [];
       storage.setItem('news', []);
+      state.news = [];
     },
-    refreshNews: (state, action: PayloadAction<boolean>) => {
-      state.isRefreshing = action.payload;
+    increaseFetchPage: (state) => {
+      state.fetchPage += 1;
+    },
+    clearFetchPage: (state) => {
+      state.fetchPage = 1;
     }
   },
   extraReducers: (builder) => {
@@ -41,7 +43,6 @@ const mainSlice = createSlice({
       state.isThemeLoading = true;
     }).addCase(getTheme.fulfilled, (state, {payload}) => {
       storage.setItem('theme', payload);
-      console.log(storage.getItem('theme'));
       state.isThemeLoading = false;
       state.theme = payload;
     }).addCase(getTheme.rejected, (state) => {
@@ -53,7 +54,6 @@ const mainSlice = createSlice({
       state.isNewsLoading = false;
       state.news = [...state.news, ...payload];
       storage.setItem('news', state.news);
-      state.newsCount = state.news.length;
     }).addCase(getNews.rejected, (state) => {
       state.isNewsLoading = false;
       state.error = "НЕ УДАЛОСЬ ЗАГРУЗИТЬ НОВОСТИ";
@@ -71,4 +71,4 @@ const mainSlice = createSlice({
 
 export default mainSlice.reducer;
 
-export const {clearNews, refreshNews} = mainSlice.actions;
+export const {clearNews, increaseFetchPage, clearFetchPage} = mainSlice.actions;

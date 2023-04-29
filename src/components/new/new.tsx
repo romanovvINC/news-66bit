@@ -10,19 +10,17 @@ interface INewComponent {
 
 const NewComponent = React.memo((props: INewComponent) => {
   const {theme, singleNew} = props;
-  console.log("upd");
   return (
     <div className={styles.newComponent} style={{
-      backgroundColor: theme.secondColor,
+      backgroundColor: theme.mainColor,
       border: `3px solid ${theme.textColor}`
     }}>
-      <h1 style={{color: theme.textColor}}>
+      <h1 style={{
+        backgroundColor: theme.textColor,
+        color: theme.mainColor
+      }}>
         {singleNew.title}
       </h1>
-      <hr style={{
-        border: '0',
-        borderTop: `3px solid ${theme.textColor}`
-      }}/>
       <p style={{
         color: theme.textColor
       }}>
