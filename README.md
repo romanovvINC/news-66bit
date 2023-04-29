@@ -1,4 +1,5 @@
-# Getting Started with Create React App
+## Тестовое задание на вакансию Frontend-разработчика в компанию 66-bit.
+В проекте использованы такие технологии, как Typescript, RTK, Axios, SASS, React-Router-Dom
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
