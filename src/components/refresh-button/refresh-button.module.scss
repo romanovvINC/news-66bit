@@ -5,13 +5,15 @@
   height: 55px;
   border: 3px solid white;
   border-radius: 30px;
-  transition: transform 0.5s;
 
   > img {
+    &:hover {
+      transform: rotate(360deg);
+    }
+    transition: transform 0.3s ease-out;
     width: 30px;
-    padding: 2px 4px 0 0;
+    padding: 2px 3px 0 0;
     height: 30px;
-    object-fit: fill;
   }
 }
 

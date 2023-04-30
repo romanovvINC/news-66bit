@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {getNews} from "../store/main/main-actions";
 import {clearFetchPage, clearNews, increaseFetchPage} from '../store/main/main-slice';
 import {store} from "../index";
@@ -22,7 +22,7 @@ const NewsPage = () => {
       mainElement: 'main',
       onRefresh() {
         refreshHandler();
-      },
+      }
     });
     document.addEventListener('scroll', scrollHandler);
     return function() {
