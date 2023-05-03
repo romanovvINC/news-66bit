@@ -7,10 +7,10 @@ import {reactTostify} from "../../helpers/toastify";
 const initialTheme: ISiteTheme = {
   id: 4,
   name: 'default',
-  secondColor: 'rgb(255, 255, 255)',
+  secondColor: 'rgb(220, 220, 220)',
   title: 'Стандартная тема',
   textColor: 'rgb(20, 20, 20)',
-  mainColor: 'rgb(200, 200, 200)'
+  mainColor: 'rgb(160, 160, 160)'
 }
 
 const initialState: IMainStore = {
@@ -48,7 +48,9 @@ const mainSlice = createSlice({
       state.theme = payload;
     }).addCase(getTheme.rejected, (state) => {
       state.isThemeLoading = false;
-      state.error = "НЕ УДАЛОСЬ ЗАГРУЗИТЬ ТЕМУ";
+      let error = "Не удалость загрузить тему";
+      state.error = error;
+      reactTostify(error);
     }).addCase(getNews.pending, (state) => {
       state.isNewsLoading = true;
     }).addCase(getNews.fulfilled, (state, {payload}) => {
@@ -57,8 +59,9 @@ const mainSlice = createSlice({
       storage.setItem('news', state.news);
     }).addCase(getNews.rejected, (state) => {
       state.isNewsLoading = false;
-      state.error = "Не удалось загрузить новости";
-      reactTostify(state.error);
+      let error = "Не удалось загрузить новости";
+      state.error = error;
+      reactTostify(error);
     }).addCase(getThemes.pending, (state) => {
       state.isThemesLoading = true;
     }).addCase(getThemes.fulfilled, (state, {payload}) => {
@@ -66,8 +69,9 @@ const mainSlice = createSlice({
       state.themes = payload;
     }).addCase(getThemes.rejected, (state) => {
       state.isThemesLoading = false;
-      state.error = "Не удалось загрузить темы";
-      reactTostify(state.error);
+      let error = "Не удалось загрузить темы"
+      state.error = error;
+      reactTostify(error);
     });
   }
 });

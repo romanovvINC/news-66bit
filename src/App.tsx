@@ -14,6 +14,8 @@ import {reactTostify} from "./helpers/toastify";
 
 function App() {
   useEffect(() => {
+    storage.setItem('themes', []);
+    storage.setItem('news', []);
     if (!storage.getItem('theme')) {
       store.dispatch(getTheme(themesNames.lightTheme));
     }
