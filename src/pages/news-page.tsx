@@ -25,7 +25,7 @@ const NewsPage = () => {
         refreshHandler();
       }
     });
-    if (storage.getItem('news').length === 0) {
+    if (storage.getItem('news')?.length === 0) {
       store.dispatch(getNews({count: newsCount, page: 1}));
     }
     document.addEventListener('scroll', scrollHandler);
