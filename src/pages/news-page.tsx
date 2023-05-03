@@ -7,6 +7,7 @@ import NewComponent from "../components/new/new";
 import LoaderModal from "../components/loader-modal/loader-modal";
 import {newsCount} from "../constants/server-const";
 import RefreshButton from "../components/refresh-button/refresh-button";
+import {storage} from "../model/storage";
 const PullToRefresh = require('pulltorefreshjs');
 
 const NewsPage = () => {
@@ -24,6 +25,9 @@ const NewsPage = () => {
         refreshHandler();
       }
     });
+    if (storage.getItem('news').length === 0) {
+      store.dispatch(getNews({count: newsCount, page: 1}));
+    }
     document.addEventListener('scroll', scrollHandler);
     return function() {
       PullToRefresh.destroyAll();
