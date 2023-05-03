@@ -2,6 +2,7 @@ import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {IMainStore, ISiteTheme} from "./main-interface";
 import {getNews, getTheme, getThemes} from "./main-actions";
 import {storage} from "../../model/storage";
+import {reactTostify} from "../../helpers/toastify";
 
 const initialTheme: ISiteTheme = {
   id: 4,
@@ -56,7 +57,8 @@ const mainSlice = createSlice({
       storage.setItem('news', state.news);
     }).addCase(getNews.rejected, (state) => {
       state.isNewsLoading = false;
-      state.error = "НЕ УДАЛОСЬ ЗАГРУЗИТЬ НОВОСТИ";
+      state.error = "Не удалось загрузить новости";
+      reactTostify(state.error);
     }).addCase(getThemes.pending, (state) => {
       state.isThemesLoading = true;
     }).addCase(getThemes.fulfilled, (state, {payload}) => {
@@ -64,7 +66,8 @@ const mainSlice = createSlice({
       state.themes = payload;
     }).addCase(getThemes.rejected, (state) => {
       state.isThemesLoading = false;
-      state.error = "НЕ УДАЛОСЬ ЗАГРУЗИТЬ ТЕМЫ";
+      state.error = "Не удалось загрузить темы";
+      reactTostify(state.error);
     });
   }
 });
