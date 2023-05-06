@@ -5,6 +5,7 @@ import {ISiteTheme} from "../../store/main/main-interface";
 import {store} from "../../index";
 import {getTheme} from "../../store/main/main-actions";
 import {themesNames} from "../../constants/server-const";
+import {setTheme} from "../../store/main/main-slice";
 
 interface IThemeButton {
   theme: ISiteTheme
@@ -13,7 +14,7 @@ interface IThemeButton {
 const ThemeButton = (props: IThemeButton) => {
   const {theme} = props;
   const changeThemeHandler = () => {
-    store.dispatch(getTheme(theme.name));
+    store.dispatch(setTheme(theme));
   }
 
   return (

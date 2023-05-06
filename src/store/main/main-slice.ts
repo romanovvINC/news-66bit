@@ -3,6 +3,8 @@ import {IMainStore, ISiteTheme} from "./main-interface";
 import {getNews, getTheme, getThemes} from "./main-actions";
 import {storage} from "../../model/storage";
 import {reactTostify} from "../../helpers/toastify";
+import {newsMocks} from "../../mocks/news-mocks";
+import {themesMocks} from "../../mocks/themes-mocks";
 
 const initialTheme: ISiteTheme = {
   id: 4,
@@ -37,6 +39,16 @@ const mainSlice = createSlice({
     },
     clearFetchPage: (state) => {
       state.fetchPage = 1;
+    },
+    loadMockData: (state) => {
+      storage.setItem('news', []);
+      storage.setItem('themes', []);
+      state.news = newsMocks;
+      state.themes = themesMocks;
+    },
+    setTheme: (state, action: PayloadAction<ISiteTheme>) => {
+      storage.setItem('theme', action.payload);
+      state.theme = action.payload;
     }
   },
   extraReducers: (builder) => {
@@ -48,7 +60,7 @@ const mainSlice = createSlice({
       state.theme = payload;
     }).addCase(getTheme.rejected, (state) => {
       state.isThemeLoading = false;
-      let error = "Не удалость загрузить тему";
+      let error = "Не удалость загрузить тему. Попробуйте обновить страницу";
       state.error = error;
       reactTostify(error);
     }).addCase(getNews.pending, (state) => {
@@ -59,7 +71,7 @@ const mainSlice = createSlice({
       storage.setItem('news', state.news);
     }).addCase(getNews.rejected, (state) => {
       state.isNewsLoading = false;
-      let error = "Не удалось загрузить новости";
+      let error = "Не удалось загрузить новости. Попробуйте обновить страницу";
       state.error = error;
       reactTostify(error);
     }).addCase(getThemes.pending, (state) => {
@@ -69,7 +81,7 @@ const mainSlice = createSlice({
       state.themes = payload;
     }).addCase(getThemes.rejected, (state) => {
       state.isThemesLoading = false;
-      let error = "Не удалось загрузить темы"
+      let error = "Не удалось загрузить темы. Попробуйте обновить страницу"
       state.error = error;
       reactTostify(error);
     });
@@ -78,4 +90,4 @@ const mainSlice = createSlice({
 
 export default mainSlice.reducer;
 
-export const {clearNews, increaseFetchPage, clearFetchPage} = mainSlice.actions;
+export const {clearNews, increaseFetchPage, clearFetchPage, loadMockData, setTheme} = mainSlice.actions;
