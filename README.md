@@ -1,6 +1,7 @@
 ## Тестовое задание на вакансию Frontend-разработчика в компанию 66-bit.
 В проекте использованы такие технологии, как Typescript, RTK, Axios, SASS, React-Router-Dom.
-Все требования из ТЗ выполнены
+Все требования из ТЗ выполнены.
+Для запуска нужно клонировать репозиторий, затем прописать npm i и npm run start
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
